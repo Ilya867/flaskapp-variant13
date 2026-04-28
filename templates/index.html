@@ -1,0 +1,40 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Лабораторная работа 1 - Вариант 13{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="text-center">Разбиение изображения на 4 части</h1>
+        <p class="text-center">Загрузите изображение, программа разобьет его на 4 равные части и построит гистограммы цветов</p>
+        <p class="text-center"><strong>Защита от ботов:</strong> решите простой пример</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form method="post" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                {{ wtf.form_field(form.upload) }}
+
+                <div class="form-group">
+                    <label for="captcha">Решите пример: {{ captcha_question }}</label>
+                    <input type="text" class="form-control" id="captcha" name="captcha" required autocomplete="off">
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        {{ form.add_timestamp() }} {{ form.add_timestamp.label.text }}
+                    </label>
+                </div>
+
+                {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endif %}
+
+                {{ wtf.form_field(form.submit) }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
